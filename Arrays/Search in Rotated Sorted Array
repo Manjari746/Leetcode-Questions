@@ -1,0 +1,49 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        
+        int n = nums.length;
+        int pi = PivotIndex(nums, 0, n-1);
+        //After getting breaking point we find the target in the 1st half through Binary search
+        int x = BinarySearch(nums, 0, pi, target);
+        // if x==-1 we will find in 2nd half of the array through Binary search
+        if(x==-1){
+            x= BinarySearch(nums, pi, n-1, target);
+        }
+        return x;
+
+    }
+
+    public int PivotIndex(int arr[], int s, int e){
+       // this function tells where the continuity is breaking in the Rotated sorted array
+        int pi= s;
+
+        while(s<=e){
+            int mid = (s+e)/2;
+            if(arr[mid]>= arr[0]){ //always comparing mid with the first element if the ele found to be smaller than 0th index ele we will store that ele in 'pi' and further find smaller ele in the array. This pi is the breaking breaking point 
+                s= mid+1;
+            }
+            else{
+                e=mid-1;
+                pi= mid;
+            }
+        }
+        return pi;
+    }
+    // Finding target through Binary search
+    public int BinarySearch(int arr[], int s, int e, int target){
+
+        while(s<=e){
+            int mid= (s+e)/2;
+            if(arr[mid]>target){
+                e= mid-1;
+            }
+            else if(arr[mid]< target){
+                s= mid+1;
+            }
+            else{
+                return mid;
+            }
+        }
+        return -1;
+    }
+}
