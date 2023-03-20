@@ -1,0 +1,41 @@
+class Solution {
+    public int maxArea(int[] height) {
+        int l = 0, r = height.length-1;
+        int max = 0;
+        while(l < r){
+            int minHeight = (height[l] < height[r] ? height[l] : height[r]);
+            int a = minHeight * (r - l);
+            if(a > max) max = a;
+            while(height[l] <= minHeight && l < r ) l++;
+            while(height[r] <= minHeight && l < r ) r--;
+        }
+        return max;
+    }
+}
+//*****************Alternate Approach************************
+// class Solution {
+//     public int maxArea(int[] height) {
+        
+//         int start =0;
+//         int end= height.length-1;
+//         int maxArea= -1 ;
+
+//         while(start<end){
+//             int width= end - start;
+//             int ht= Math.min(height[start], height[end]);
+//             int curArea= width* ht;
+
+//             maxArea = Math.max(curArea, maxArea);
+
+//             while(height[start]<=ht && start<end){
+//                 start++;
+//             } 
+//             while(height[end]<=ht && start < end){
+//                 end--;
+//             }
+
+//         }
+
+//         return maxArea;
+//     }
+// }
